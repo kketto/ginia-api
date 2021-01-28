@@ -1,0 +1,22 @@
+{
+    "type": "mssql",
+    "host": "localhost",
+    "port": 1433,
+    "username": "keti",
+    "password": "Test1234@",
+    "database": "ginia",
+    "synchronize": true,
+    "logging": false,
+    "entities": [
+        "dist/entity/**/*.js"
+    ],
+    "migrations": [
+        "dist/migration/**/*.js"
+    ],
+    "cli": {
+        "migrationsDir": "src/migration"
+    },
+    "subscribers": [
+        "src/subscriber/**/*.ts"
+    ]
+}
