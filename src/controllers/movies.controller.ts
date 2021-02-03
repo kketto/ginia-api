@@ -57,15 +57,6 @@ export async function addMovie(
     req: Request,
     res: Response
 ): Promise<any> {
-    const token = req.headers.authorization;//?.split(' ')[1];
-    if (!token) {
-        return res.sendStatus(460);
-    }
-    const verify = jwt.verify(token, "I'm Perfect") as any;
-    if (!verify || verify.role !== 2 && verify.role !== 3) {
-        return res.sendStatus(460);
-    }
-
     const data = req.body;
     if (data.cast && !Array.isArray(data.cast)) {
         return res.sendStatus(400);
@@ -142,21 +133,3 @@ export async function editMovie(
     await a.save();
     return res.json(a);
 }
-
-
-// editMovie(id: number, movie: Partial<Movie>): void {
-//     let editMovie = this.getMovieById(id);
-//     editMovie.title = movie.title;
-//     editMovie.videoSrc = movie.videoSrc;
-//     editMovie.imageSrc = movie.imageSrc;
-//     editMovie.year = movie.year;
-//     editMovie.cast = movie.cast;
-//     editMovie.director = movie.director;
-//     editMovie.description = movie.description;
-//     editMovie.categorieIds = movie.categorieIds;
-
-//     this.localStorageService.setItem("movies", this.movies);
-// }
-
-
-

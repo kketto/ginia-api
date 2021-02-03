@@ -1,4 +1,4 @@
-import { isNumberString } from "class-validator";
+import { isNumberString, validate } from "class-validator";
 import { Request, Response } from "express";
 import { Category } from "../entity/Category";
 import { Movie } from "../entity/Movie";
@@ -60,4 +60,46 @@ export async function moviesByCategoryId(
 
     return res.json(category.movies);
 
+}
+
+export async function addCategory(
+    req: Request,
+    res: Response
+): Promise<any> {
+    const data = req.body;
+
+
+    let a = new Category();
+    Object.assign(a, data);
+    const errors = await validate(a);
+    if (errors.length > 0) {
+        return res.sendStatus(400);
+    }
+    await a.save();
+    return res.json(a);
+}
+
+export async function editCategory(
+    req: Request,
+    res: Response
+): Promise<any> {
+    const id = req.params.id;
+    const data = req.body;
+    if (!id || !data) {
+        return res.sendStatus(400);
+    }
+
+    const a = await Category.findOne(id);
+
+    if (!a) {
+        return res.sendStatus(404);
+    }
+
+    Object.assign(a, data);
+    const errors = await validate(a);
+    if (errors.length > 0) {
+        return res.sendStatus(400);
+    }
+    await a.save();
+    return res.json(a);
 }
