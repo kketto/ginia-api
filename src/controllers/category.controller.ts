@@ -103,3 +103,22 @@ export async function editCategory(
     await a.save();
     return res.json(a);
 }
+
+export async function deleteCategory(
+    req: Request,
+    res: Response
+): Promise<any> {
+    const id = req.params.id;
+    if (!id) {
+        return res.sendStatus(400);
+    }
+
+    const a = await Category.findOne(id);
+
+    if (!a) {
+        return res.sendStatus(404);
+    }
+    await a.remove();
+    return res.json()
+
+}
